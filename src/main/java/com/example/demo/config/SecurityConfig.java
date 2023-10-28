@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -24,7 +25,10 @@ public class SecurityConfig {
                         h -> h.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
                 )
                 .authorizeHttpRequests(it ->
-                        it.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        it.requestMatchers(
+                                new AntPathRequestMatcher("/signup"),
+                                new AntPathRequestMatcher("/h2-console/**")
+                        ).permitAll()
                 );
 
         return http.build();
