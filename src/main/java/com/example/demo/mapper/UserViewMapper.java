@@ -5,10 +5,12 @@ import com.example.demo.controller.request.CreateUserRequest;
 import com.example.demo.controller.response.UserViewResponse;
 import com.example.demo.entity.Users;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
-public interface UserViewMapper {
-    Users createUsers(CreateUserRequest createUserRequest);
+@Component
+public abstract class UserViewMapper {
+    public abstract Users createUsers(CreateUserRequest createUserRequest);
 
-    UserViewResponse viewUser(Users users);
+    public abstract UserViewResponse viewUser(Users users);
 }
