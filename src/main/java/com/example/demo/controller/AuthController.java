@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.request.CreateUserRequest;
+import com.example.demo.controller.request.LoginRequest;
+import com.example.demo.controller.response.AuthenticationResponse;
 import com.example.demo.controller.response.UserViewResponse;
 import com.example.demo.service.AuthticationService;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +21,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<UserViewResponse> signup(@RequestBody CreateUserRequest createUserRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(authticationService.saveUser(createUserRequest));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthenticationResponse());
     }
 }
