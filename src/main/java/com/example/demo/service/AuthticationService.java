@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.request.CreateUserRequest;
+import com.example.demo.controller.request.LoginRequest;
 import com.example.demo.controller.response.UserViewResponse;
 import com.example.demo.entity.Users;
 import com.example.demo.repository.UserRepository;
@@ -23,8 +24,11 @@ public class AuthticationService {
                 .role(createUserRequest.getRole())
                 .build();
         Users save = userRepository.save(build);
+        return new UserViewResponse(save.getEmail(),save.getUsername(),save.getNickName(),save.getPhone());
+    }
+
+    public void login(LoginRequest loginRequest) {
 
 
-        return new UserViewResponse(save.getEmail(),save.getUserName(),save.getNickName(),save.getPhone());
     }
 }
