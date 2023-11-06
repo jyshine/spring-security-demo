@@ -20,9 +20,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserRepository repository;
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -32,8 +32,8 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(it ->
                         it.requestMatchers(
-                                new AntPathRequestMatcher("/signup"),
                                 new AntPathRequestMatcher("/login"),
+                                new AntPathRequestMatcher("/signup"),
                                 new AntPathRequestMatcher("/h2-console/**")
                         ).permitAll().anyRequest().authenticated()
                 )
