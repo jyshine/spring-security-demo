@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 import com.example.demo.config.jwt.JwtAuthenticationFilter;
+import com.example.demo.entity.Role;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,12 +31,11 @@ public class SecurityConfig {
                 .headers(
                         h -> h.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN))
                 )
-                .authorizeHttpRequests(it ->
-                        it.requestMatchers(
-                                new AntPathRequestMatcher("/login"),
-                                new AntPathRequestMatcher("/signup"),
-                                new AntPathRequestMatcher("/h2-console/**")
-                        ).permitAll().anyRequest().authenticated()
+                .authorizeHttpRequests(it -> it
+                        .requestMatchers(new AntPathRequestMatcher("/auth/**"), new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(   new AntPathRequestMatcher("/admin/**")).hasRole(Role.ADMIN.name())
+                        .requestMatchers(   new AntPathRequestMatcher("/user/**")).hasRole(Role.USER.name())
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(
                         httpSecuritySessionManagementConfigurer ->
