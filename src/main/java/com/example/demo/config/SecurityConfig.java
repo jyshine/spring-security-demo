@@ -33,8 +33,8 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(it -> it
                         .requestMatchers(new AntPathRequestMatcher("/auth/**"), new AntPathRequestMatcher("/h2-console/**")).permitAll()
-                        .requestMatchers(   new AntPathRequestMatcher("/admin/**")).hasRole(Role.ADMIN.name())
-                        .requestMatchers(   new AntPathRequestMatcher("/user/**")).hasRole(Role.USER.name())
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyRole("ADMIN","USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(
